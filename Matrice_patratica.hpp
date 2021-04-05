@@ -20,6 +20,9 @@ class Matrice_patratica : public Matrice
 		bool setComplexAtPosition(int l, int c, Complex comp);
 		std::ostream &afisare(std::ostream &os);
 		Matrice_patratica operator=(Matrice_patratica &m);
+		static Complex calculateDeterminant(Complex **mat, int n);
+		Complex getDeterminant();
+		bool is_diagonal();
 //		std::ostream &operator<<(std::ostream &os);
 //		std::istream &operator>>(std::istream &is);
 		friend std::istream &operator>>(std::istream &is, Matrice_patratica &m);

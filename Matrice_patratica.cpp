@@ -1,3 +1,4 @@
+#include <math.h>
 #include "Matrice_patratica.hpp"
 #include "Complex.hpp"
 
@@ -68,6 +69,7 @@ std::ostream &Matrice_patratica::afisare(std::ostream &os)
 		
 		os<<std::endl;
 	}
+	std::cout<<this->getDeterminant()<<std::endl;
 	return os;
 }
 
@@ -137,6 +139,56 @@ bool Matrice_patratica::setComplexAtPosition(int l, int c, Complex comp)
 	return Matrice::setComplexAtPosition(l, c, comp);
 }
 
+
+Complex Matrice_patratica::calculateDeterminant(Complex **matrix, int n)
+{
+	Complex **submatrix = new Complex*[n];
+	for(int i = 0; i < n; i++)
+		submatrix[i] = new Complex[n];
+		
+	Complex nComp;
+	nComp = (matrix[0][0] * matrix[1][1]);
+	Complex det;
+	if (n == 2)
+		return ((matrix[0][0] * matrix[1][1]) - (matrix[1][0] * matrix[0][1]));
+	else 
+	{
+		for (int x = 0; x < n; x++) {
+			int subi = 0;
+			for (int i = 1; i < n; i++) {
+				int subj = 0;
+				for (int j = 0; j < n; j++) {
+					if (j == x)
+						continue;
+				submatrix[subi][subj] = matrix[i][j];
+				subj++;
+			}
+			subi++;
+		 }
+		det = det + (pow(-1, x) * matrix[0][x] * (Matrice_patratica::calculateDeterminant ( submatrix, n - 1 )));
+	  }
+	}
+	return det;
+}
+
+bool Matrice_patratica::is_diagonal()
+{
+	Complex **elem = this->getComplexElements();
+	for(int i = 0; i < this->dim; i++)
+		for(int j = 0; j < this->dim; j++)
+			if((elem[i][j].getReal() != 0 || elem[i][j].getImag() != 0) && i != j)
+				return false;
+				
+	return true;
+}
+
+
+Complex Matrice_patratica::getDeterminant()
+{
+	int n = this->getDim();
+	Complex **matrix = this->getComplexElements();
+	return this->calculateDeterminant(matrix, n);
+}
 
 unsigned int Matrice_patratica::totalMatrix = 0;
 

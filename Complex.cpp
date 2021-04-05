@@ -19,13 +19,13 @@ Complex::Complex(float real, float imag)
 	this->imag = imag;
 }
 
-Complex::Complex(Complex &comp)
+Complex::Complex(Complex const &comp)
 {
-	this->real = comp.getReal();
-	this->imag = comp.getImag();
+	this->real = comp.real;
+	this->imag = comp.imag;
 }
 
-void Complex::display()
+void Complex::display() const
 {
 	if(imag >= 0)
 		std::cout<<real<<"+"<<imag<<"i";
@@ -53,14 +53,49 @@ void Complex::setImag(float imag)
 	this->imag = imag;
 }
 
-Complex Complex::operator=(Complex &rightC)
+Complex Complex::operator=(const Complex &rightC)
 {
-	this->real = rightC.getReal();
-	this->imag = rightC.getImag();
+	this->real = rightC.real;
+	this->imag = rightC.imag;
 	return *this;
 }
 
-std::ostream &operator<<(std::ostream &os, Complex &c)
+Complex Complex::operator+(const Complex &rightC) const
+{
+	Complex comp;
+	comp.setReal(this->real + rightC.real);
+	comp.setImag(this->imag + rightC.imag);
+	
+	return comp;
+}
+
+Complex Complex::operator-(const Complex &rightC) const
+{
+	Complex comp;
+	comp.setReal(this->real - rightC.real);
+	comp.setImag(this->imag - rightC.imag);
+	return comp;
+}
+
+Complex Complex::operator*(const Complex &rightC) const
+{
+	Complex comp;
+	float real = this->real * rightC.real - this->imag * rightC.imag;
+	float imag = this->real* rightC.imag + rightC.real * this->imag; 
+	comp.setImag(imag);
+	comp.setReal(real);
+	return comp;
+}
+
+Complex operator*(const double d, const Complex &rightC)
+{
+	Complex comp;
+	comp.setReal(d * rightC.real);
+	comp.setImag(d * rightC.imag);
+	return comp;
+}
+
+std::ostream &operator<<(std::ostream &os, const Complex &c)
 {
 	c.display();
 	return os;
@@ -74,6 +109,8 @@ std::istream &operator>>(std::istream &is, Complex &c)
 	std::cin>>c.imag;
 	return is;
 }
+
+
 
 
 
