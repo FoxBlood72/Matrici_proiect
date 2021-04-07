@@ -7,6 +7,7 @@ class Matrice
 	protected:
 		Complex **cElements;
 		virtual void resize() = 0;
+		virtual void destruct() = 0;
 	public:
 		static unsigned int totalMatrix;
 		Matrice();
@@ -19,7 +20,7 @@ class Matrice
 		virtual std::ostream &afisare(std::ostream &os) = 0; // a durat mult sa gasesc metoda asta
 		friend std::ostream &operator<<(std::ostream &os, Matrice &mat); // fiecare subclasa are proria ei functie de afisare
 		friend std::ostream &operator<<(std::ostream &os, Matrice *mat); // aceasta se apeleaza cu operatorul <<
-		~Matrice();
+		virtual ~Matrice();
 
 };
 

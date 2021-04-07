@@ -56,6 +56,9 @@ void check_diagonal_matrix(std::vector<Matrice *> &v_matrix, int &n)
 
 void readNMatrix(std::vector<Matrice *> &v_matrix, int &n)
 {
+	for(std::vector<Matrice *>::iterator it = v_matrix.begin(); it != v_matrix.end(); it++)
+		delete *it;
+	v_matrix.clear();
 	std::cout<<"Cate matrici doriti sa cititi? "<<std::endl;
 	std::cin>>n;
 	
@@ -141,9 +144,9 @@ void menu()
 
 void display_total_matrix()
 {
-	std::cout<<"TOTALUL MATRICILOR: "<<Matrice::totalMatrix<<std::endl;
-	std::cout<<"TOTALUL MATRICILOR PATRATICE: "<<Matrice_patratica::totalMatrix<<std::endl;
-	std::cout<<"TOTALUL MATRICILOR OARECARE: "<<Matrice_oarecare::totalMatrix<<std::endl;
+	std::cout<<"TOTALUL MATRICELOR: "<<Matrice::totalMatrix<<std::endl;
+	std::cout<<"TOTALUL MATRICELOR PATRATICE: "<<Matrice_patratica::totalMatrix<<std::endl;
+	std::cout<<"TOTALUL MATRICELOR OARECARE: "<<Matrice_oarecare::totalMatrix<<std::endl;
 }
 
 
@@ -176,6 +179,9 @@ int main()
 	std::vector<Matrice *> v_matrix;
 	int n = 0;
 	askForOption(v_matrix, n);
-
+	for(std::vector<Matrice *>::iterator it = v_matrix.begin(); it != v_matrix.end(); it++)
+		delete *it;
+	v_matrix.clear();
+	
 	return 0;
 }
